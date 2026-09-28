@@ -16,3 +16,19 @@ You need PHP 8.2+, Composer, and MySQL or MariaDB.
 The demo data has 10 tasks and one user. Run the seeder again to reset the tasks.
 
 ### Screenshots
+
+**Welcome**
+
+![Welcome page](screenshots/welcome.png)
+
+**Task List**
+
+![Task List page](screenshots/tasks.png)
+
+**Profile**
+
+![Profile page](screenshots/profile.png)
+
+**About**
+
+![About page](screenshots/about.png)
