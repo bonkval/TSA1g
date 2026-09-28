@@ -14,3 +14,5 @@ You need PHP 8.2+, Composer, and MySQL or MariaDB.
 6. Run `php spark serve` and open `http://localhost:8080`.
 
 The demo data has 10 tasks and one user. Run the seeder again to reset the tasks.
+
+### Screenshots
