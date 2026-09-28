@@ -15,9 +15,8 @@ You need PHP 8.2+, Composer, and MySQL or MariaDB.
 
 The demo data has 10 tasks and one user. Run the seeder again to reset the tasks.
 
-## Hosting
-
-Create a database in your hosting panel. If your host has a terminal, run the migrate and seed commands above. Otherwise, import a local SQL export through phpMyAdmin. Update `.env` with the hosting database details and your site's `app.baseURL`. Set the site's document root to `public/`.
+###Hosted Here###
+https://bonkval.github.io/TSA1g/
 
 ### Screenshots
 
