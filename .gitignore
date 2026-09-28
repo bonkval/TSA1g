@@ -14,3 +14,4 @@ writable/session/*
 writable/uploads/*
 !writable/uploads/index.html
 .phpunit.result.cache
+database/*.sql
