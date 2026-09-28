@@ -1,37 +1,35 @@
 # Tasks for Today Management System
 
-An Express MVC application backed by MySQL. The Welcome page shows tasks dated today; the Task List shows every task in date order. The Profile page shows one demo user, and the About page identifies the developer.
+A plain CodeIgniter 4 / PHP MVC app backed by MySQL. The Welcome page shows only today's tasks, the Task List page shows every task by date, the Profile page shows one demo user, and the About page identifies the developer. No CSS or client-side JavaScript is used.
 
 ## Requirements
 
-- Node.js 20 or newer
-- MySQL 8 or a compatible MariaDB server
-- A MySQL account permitted to create a database and tables
+- PHP 8.2 or newer with the extensions required by CodeIgniter 4, including `intl` and `mysqli`
+- Composer 2
+- MySQL 8 or compatible MariaDB server
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and set your MySQL credentials. Set `APP_TIME_ZONE` to the team's time zone (default: `Asia/Singapore`).
-2. Run `npm install`.
-3. Run `npm run db:setup`. This creates the database and the two required tables. On empty tables, it inserts eight tasks across yesterday, today, and tomorrow, plus exactly one demo user. Repeating setup does not duplicate records.
-4. Run `npm start` and open `http://localhost:3000`.
+1. Run `composer install`.
+2. Create a MySQL database named `tasks_for_today` (or use another name in `.env`). For example: `CREATE DATABASE tasks_for_today;`.
+3. Copy `.env.example` to `.env` and set your database credentials and `app.baseURL`. The default app time zone is `Asia/Singapore`.
+4. Run `php spark migrate` to create the `tasks` and `users` tables.
+5. Run `php spark db:seed DemoSeeder` to insert eight tasks across yesterday, today, and tomorrow and exactly one demo user. Repeating the seeder does not duplicate data.
+6. Run `php spark serve`, then open `http://localhost:8080/`.
 
-## Pages
+For Apache or another web server, point the document root to `public/` and configure URL rewriting. Set `app.baseURL` to the hosted URL.
 
-| Route | Content |
+## Routes
+
+| Route | Data |
 | --- | --- |
-| `/` | Tasks whose `task_date` equals today in `APP_TIME_ZONE` |
-| `/tasks` | All tasks, ordered by `task_date` then `id` |
-| `/profile` | The demo user |
+| `/` | Tasks with `task_date` equal to today in the configured time zone |
+| `/tasks` | Every task, ordered by `task_date` then `id` |
+| `/profile` | The single demo user |
 | `/about` | Developer information |
 
-The setup script seeds relative to its run date. To repopulate the sample tasks for a later day, clear the `tasks` table and rerun `npm run db:setup`.
+The migration and seeder live in `app/Database/`. Queries live in `app/Models/`, route actions in `app/Controllers/`, and plain PHP templates in `app/Views/`.
 
-## Structure
+The sample tasks are dated relative to when the seeder runs. If reusing the sample database on a later day, clear only the `tasks` table and rerun the seeder to create current sample dates.
 
-- `models/`: SQL retrieval logic
-- `controllers/`: Page handlers
-- `routes/`: URL mapping
-- `views/`: Plain EJS page templates
-- `scripts/setupDatabase.js`: Schema creation and sample data
-
-No hosted URL has been configured. Deploy the same code with a reachable MySQL server and set the environment variables from `.env.example`.
+The GitHub repository contains the source code; Composer installs the framework dependency into the ignored `vendor/` directory. No hosted deployment has been configured yet.
