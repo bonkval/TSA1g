@@ -1,0 +1,12 @@
+<% if (tasks.length === 0) { %>
+  <p>No tasks found.</p>
+<% } else { %>
+  <table>
+    <thead><tr><th scope="col">Title</th><th scope="col">Status</th><th scope="col">Task date</th></tr></thead>
+    <tbody>
+      <% tasks.forEach(task => { %>
+        <tr><td><%= task.title %></td><td><%= task.status %></td><td><%= task.task_date %></td></tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
