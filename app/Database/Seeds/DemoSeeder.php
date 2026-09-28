@@ -14,33 +14,59 @@ class DemoSeeder extends Seeder
         $tasks = $this->db->table('tasks');
         $users = $this->db->table('users');
         $now = new DateTimeImmutable('now', new DateTimeZone(config('App')->appTimezone));
-        $today = $now->format('Y-m-d');
         $createdAt = $now->format('Y-m-d H:i:s');
-
-        if ($tasks->countAllResults() === 0) {
-            $tasks->insertBatch([
-                ['title' => 'Review yesterday\'s progress', 'status' => 'completed', 'task_date' => $now->modify('-1 day')->format('Y-m-d'), 'created_at' => $createdAt],
-                ['title' => 'Prepare team meeting notes', 'status' => 'completed', 'task_date' => $now->modify('-1 day')->format('Y-m-d'), 'created_at' => $createdAt],
-                ['title' => 'Check project inbox', 'status' => 'pending', 'task_date' => $today, 'created_at' => $createdAt],
-                ['title' => 'Attend daily team meeting', 'status' => 'pending', 'task_date' => $today, 'created_at' => $createdAt],
-                ['title' => 'Update task tracker', 'status' => 'pending', 'task_date' => $today, 'created_at' => $createdAt],
-                ['title' => 'Review open requests', 'status' => 'pending', 'task_date' => $today, 'created_at' => $createdAt],
-                ['title' => 'Draft weekly report', 'status' => 'pending', 'task_date' => $now->modify('+1 day')->format('Y-m-d'), 'created_at' => $createdAt],
-                ['title' => 'Plan next sprint', 'status' => 'pending', 'task_date' => $now->modify('+1 day')->format('Y-m-d'), 'created_at' => $createdAt],
-            ]);
-        }
 
         $userCount = $users->countAllResults();
         if ($userCount > 1) {
             throw new RuntimeException('The users table must contain exactly one demo user.');
         }
-        if ($userCount === 0) {
-            $users->insert([
-                'username' => 'demo_user',
-                'full_name' => 'Alex Morgan',
-                'email' => 'alex.morgan@example.com',
-                'created_at' => $createdAt,
-            ]);
+
+        $taskRows = [
+            ['Networking 2: SW 2', 'completed', '2026-09-29'],
+            ['Networking 2: Formative 2', 'completed', '2026-09-29'],
+            ['Networking 2: Technical Assessment 4', 'completed', '2026-09-29'],
+            ['Networking 2: Technical Assessment 5', 'completed', '2026-09-29'],
+            ['Networking 2: AI-Assisted Module 4-5', 'completed', '2026-09-29'],
+            ['IT0049: TSA1', 'pending', '2026-09-30'],
+            ['IT0037: Title Proposal', 'pending', '2026-10-05'],
+            ['IT0035: Summative Assessment 1', 'pending', '2026-09-29', '12:00:00'],
+            ['Networking 2: Summative Assessment 2', 'pending', '2026-10-01'],
+            ['Networking 2: CCST', 'pending', '2026-10-05'],
+        ];
+
+        $this->db->transBegin();
+        try {
+            $tasks->emptyTable();
+            $tasks->insertBatch(array_map(
+                static fn (array $row): array => [
+                    'title' => $row[0],
+                    'status' => $row[1],
+                    'task_date' => $row[2],
+                    'due_time' => $row[3] ?? null,
+                    'created_at' => $createdAt,
+                ],
+                $taskRows
+            ));
+
+            $profile = [
+                'username' => 'MrDemoGuy',
+                'full_name' => 'Demo Guy',
+                'email' => 'cedrickvales1111@gmail.com',
+            ];
+            if ($userCount === 0) {
+                $users->insert($profile + ['created_at' => $createdAt]);
+            } else {
+                $user = $users->get()->getRowArray();
+                $users->where('id', $user['id'])->update($profile);
+            }
+
+            if ($this->db->transStatus() === false) {
+                throw new RuntimeException('Unable to update the demo records.');
+            }
+            $this->db->transCommit();
+        } catch (\Throwable $error) {
+            $this->db->transRollback();
+            throw $error;
         }
     }
 }

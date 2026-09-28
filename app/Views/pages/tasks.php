@@ -1,4 +1,7 @@
 <?= view('partials/header', ['title' => $title]) ?>
 <h1>All Tasks</h1>
-<?= view('partials/task_table', ['tasks' => $tasks]) ?>
+<p>Every assignment, ordered by scheduled date.</p>
+<section class="content-panel" aria-label="All tasks">
+    <?= view('partials/task_table', ['tasks' => $tasks]) ?>
+</section>
 <?= view('partials/footer') ?>

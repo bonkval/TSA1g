@@ -14,10 +14,15 @@ class Pages extends BaseController
         $today = (new DateTimeImmutable('now', new DateTimeZone(config('App')->appTimezone)))
             ->format('Y-m-d');
 
+        $taskGroups = [];
+        foreach ((new TaskModel())->allByDate() as $task) {
+            $taskGroups[$task['task_date']][] = $task;
+        }
+
         return view('pages/welcome', [
             'title' => 'Welcome',
             'today' => $today,
-            'tasks' => (new TaskModel())->forDate($today),
+            'taskGroups' => $taskGroups,
         ]);
     }
 
