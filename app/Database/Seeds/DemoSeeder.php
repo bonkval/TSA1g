@@ -29,7 +29,7 @@ class DemoSeeder extends Seeder
             ['Networking 2: AI-Assisted Module 4-5', 'completed', '2026-09-29'],
             ['IT0049: TSA1', 'pending', '2026-09-30'],
             ['IT0037: Title Proposal', 'pending', '2026-10-05'],
-            ['IT0035: Summative Assessment 1', 'pending', '2026-09-29', '12:00:00'],
+            ['IT0035: Summative Assessment 1', 'pending', '2026-09-29'],
             ['Networking 2: Summative Assessment 2', 'pending', '2026-10-01'],
             ['Networking 2: CCST', 'pending', '2026-10-05'],
         ];
@@ -42,7 +42,6 @@ class DemoSeeder extends Seeder
                     'title' => $row[0],
                     'status' => $row[1],
                     'task_date' => $row[2],
-                    'due_time' => $row[3] ?? null,
                     'created_at' => $createdAt,
                 ],
                 $taskRows
