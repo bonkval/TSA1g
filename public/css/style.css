@@ -39,6 +39,18 @@ nav a {
 
 nav a:hover, nav a:focus-visible { background: #eeeef1; }
 
+.nav-form, .actions form { display: inline; margin: 0; }
+.nav-button, .text-button { font: inherit; cursor: pointer; border: 0; background: none; color: #0066cc; text-decoration: underline; padding: .5rem .8rem; }
+.actions { white-space: nowrap; }
+.actions a { margin-right: .5rem; }
+.task-form { display: grid; gap: 1rem; max-width: 32rem; }
+.task-form label { display: grid; gap: .35rem; font-weight: 600; }
+.task-form input, .task-form select { font: inherit; padding: .65rem .75rem; border: 1px solid #c8c8ce; border-radius: .5rem; }
+.task-form button { justify-self: start; font: inherit; padding: .65rem 1rem; border: 0; border-radius: .5rem; background: #1d1d1f; color: #fff; cursor: pointer; }
+.notice { padding: .75rem 1rem; border-radius: .5rem; background: #f0f0f2; }
+.notice.error { background: #fff0f0; color: #8b1d1d; }
+.notice.success { background: #eff8f0; color: #205a2a; }
+
 a:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
 
 main {

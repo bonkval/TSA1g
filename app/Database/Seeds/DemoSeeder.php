@@ -51,6 +51,7 @@ class DemoSeeder extends Seeder
                 'username' => 'MrDemoGuy',
                 'full_name' => 'Demo Guy',
                 'email' => 'cedrickvales1111@gmail.com',
+                'password' => password_hash('password123', PASSWORD_DEFAULT),
             ];
             if ($userCount === 0) {
                 $users->insert($profile + ['created_at' => $createdAt]);
