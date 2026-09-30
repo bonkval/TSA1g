@@ -15,7 +15,7 @@ You need PHP 8.2+, Composer, and MySQL or MariaDB.
 
 The demo data has 10 tasks and one user. Run the seeder again to reset the tasks.
 
-###Hosted Here###
+### Hosted Here ###
 https://bonkval.github.io/TSA1g/
 
 ### Screenshots
